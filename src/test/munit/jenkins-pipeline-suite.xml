@@ -8,32 +8,33 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="jenkins-pipeline-suite.xml" />
-	<munit:test name="jenkins-pipelineFlow-test" doc:id="e2d8a305-7111-43d7-82d2-6599c6103f97" >
+	<munit:test name="jenkins-pipelineFlow-test1" doc:id="82e5eea4-ed99-497f-af5f-a328db363807" >
 		<munit:behavior >
-			<munit-tools:mock-when doc:name="Mock Request" doc:id="fca30962-7f99-4cb1-8a37-f04258b743f1" processor="http:request">
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="2ba6640b-c4a7-44bb-955e-a81e381f3321" processor="http:request">
 				<munit-tools:with-attributes >
 					<munit-tools:with-attribute whereValue="1276aa7c-7c45-4026-be44-87449531f8a9" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
-					<munit-tools:payload value="#[output application/json --- readUrl('classpath://jenkinspipelineFlowtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
-					<munit-tools:attributes value="#[readUrl('classpath://jenkinspipelineFlowtest\mock_attributes.dwl')]" />
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://jenkinspipelineFlowtest1\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://jenkinspipelineFlowtest1\mock_attributes.dwl')]" />
 				</munit-tools:then-return>
 			</munit-tools:mock-when>
-			<munit:set-event doc:name="Set Input" doc:id="b08ad242-fa1e-4d74-803c-260d940eec35" >
-				<munit:payload value="#[readUrl('classpath://jenkinspipelineFlowtest\set-event_payload.dwl')]" encoding="UTF-8" />
-				<munit:attributes value="#[readUrl('classpath://jenkinspipelineFlowtest\set-event_attributes.dwl')]" />
-			</munit:set-event>
 		</munit:behavior>
 		<munit:execution >
-			<flow-ref doc:name="Flow-ref to jenkins-pipelineFlow" doc:id="4ed22f54-2bab-4573-9f0d-95d68b41d2ef" name="jenkins-pipelineFlow"/>
+			<flow-ref doc:name="Flow-ref to jenkins-pipelineFlow" doc:id="5b7c5ae7-3fe6-4f06-af85-71833da19490" name="jenkins-pipelineFlow"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert doc:name="Assert payload" doc:id="7c54d03d-96cd-440f-9094-4d4d63b76a05" message="The payload does not match">
+			<munit-tools:assert doc:name="Assert payload" doc:id="f3043eca-0b86-424f-ae49-44b24808b115" message="The payload does not match">
 				<munit-tools:that ><![CDATA[#[%dw 2.0
-import jenkinspipelineFlowtest::assert_expression_payload
+import jenkinspipelineFlowtest1::assert_expression_payload
 ---
 assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
 			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="e0a6a146-9585-4c46-9a02-9c9571573ae4" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="887a4e5a-28d5-44c2-81ea-9c6133565148" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
 
